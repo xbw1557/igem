@@ -3,7 +3,7 @@ var bodyParser = require('body-parser');
 var config = require('./config');
 var login = require('./routes/login');
 var user = require('./routes/user');
-var test = require('./routes/test');
+ 
 
 
 var app = express();
@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 
 app.use('/login', login);
 
-app.use('/test', test);
+ 
 app.use('/user', user);
 
 
