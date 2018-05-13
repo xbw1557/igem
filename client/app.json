@@ -1,0 +1,35 @@
+{
+ "pages":["pages/radio/radio","pages/me/me","pages/QA/QA"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#4169E1",
+    "navigationBarTitleText": "2dos",
+    "navigationBarTextStyle": "white"
+  },
+ "tabBar":{
+   "list":[
+    {
+      "text":"电台",
+      "pagePath":"pages/radio/radio",
+      "iconPath":"images/icons/me.png",
+      "selectedIconPath":"images/icons/me-active.png"
+    },
+    {
+      "text": "Q&A",
+      "pagePath": "pages/QA/QA",
+      "iconPath": "images/icons/me.png",
+      "selectedIconPath": "images/icons/me-active.png"
+    },
+    {
+      "text": "我的",
+      "pagePath": "pages/me/me",
+      "iconPath": "images/icons/me.png",
+      "selectedIconPath": "images/icons/me-active.png"
+    }
+   ],
+   "color": "#000",
+   "selectedColor": "#00f"
+   }
+
+}

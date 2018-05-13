@@ -1,0 +1,39 @@
+<!--pages/login/login.wxml-->
+<!--pages/me/me.wxml-->
+<view class="container">
+  <view class="avatar">
+    <image bindtap="changeAvatar" src="{{ avatar }}" />
+  </view>
+  <view class="name">{{ name }}</view>
+  <view class="item">
+    <text>自我介绍：</text>
+    <text hidden="{{!condition}}">{{intro?intro:"无"}}</text>
+     <input auto-focus hidden="{{condition}}" bindblur="changeintro" />
+  </view>
+  <view class="item">
+    <text>身份：</text>
+    <text hidden="{{!condition}}">{{status?status:"无"}}</text>
+     <input hidden="{{condition}}" bindblur="changestatus"/>
+     </view>
+      <view class="item">
+    <text>学校：</text>
+    <text hidden="{{!condition}}">{{school?school:"无"}}</text>
+    <input hidden="{{condition}}" bindblur="changeschool"/>
+  </view>
+    <view class="item">
+    <text>项目：</text>
+    <text hidden="{{!condition}}">{{project?project:"无"}}</text>
+    <input hidden="{{condition}}" bindblur="changeproject"/>
+  </view>
+    <view class="item">
+    <text>电台：</text>
+    <text hidden="{{!condition}}">{{radio?radio:"无"}}</text>
+    <input hidden="{{condition}}" bindblur="changeradio"/>
+  </view>
+</view>
+
+<view>
+<button hidden="{{!condition}}" bindtap="editinfor">修改个人资料</button>
+<button hidden="{{condition}}" bindtap="postinfor">提交</button>
+</view>
+ 

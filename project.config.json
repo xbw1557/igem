@@ -1,0 +1,16 @@
+{
+	"client": "./client",
+	"qcloudRoot": "./server",
+	"setting": {
+		"urlCheck": true,
+		"es6": false,
+		"postcss": true,
+		"minified": true,
+		"newFeature": true
+	},
+	"appid": "wx8fa61c5901a83488",
+	"projectname": "test",
+	"condition": {}
+}
+ 
+ 
