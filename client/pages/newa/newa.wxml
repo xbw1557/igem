@@ -1,0 +1,12 @@
+<!--pages/newa/newa.wxml--> 
+ <form bindsubmit="formSubmit">
+ <textarea name="detail" auto-height placeholder="请输入回帖" />
+<image style="height:50rpx; width:50rpx" src="../../images/book.png" bindtap='UploadPicture'></image>
+<text>已上传图片:</text>
+<block wx:for="{{pictures}}" wx:for-index="idx" wx:for-item="item">
+        <image src="{{item}}" style="height:100rpx; width:100rpx">
+        </image>
+    </block>
+
+<button  formType="submit">发布回帖</button>
+</form>

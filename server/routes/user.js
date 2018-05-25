@@ -20,7 +20,7 @@ var cos = new CosSdk({
   SecretKey: qcloudConfig.qcloudSecretKey
 });
 
-router.use(loginCheckMiddleware);  //使用用户鉴权中间件，所有匹配进入 /user下 路由的请求都会先进入此预处理中间件
+router.use(loginCheckMiddleware);  //使用用户鉴权中间件
 
 router.all('*', function (req, res, next) {
   if (!req.session) {
@@ -32,7 +32,7 @@ router.all('*', function (req, res, next) {
   next();
 });
 
-// 获取用户信息 // 此API对应客户端请求： get /user 
+// 获取用户信息
 router.get('/', function (req, res, next) {
 
   mysql(userTable).where({          //通过open_id搜索数据表，找到对应用户记录
@@ -61,7 +61,7 @@ router.get('/', function (req, res, next) {
 
 });
 
-//新增用户（即在数据表里新增一条用户记录  // 此API对应客户端请求： post /user 
+//新增用户（即在数据表里新增一条用户记录
 router.post('/', function (req, res, next) {
 
   var userInfo = req.body; //提取request里发送过来的data
@@ -101,7 +101,7 @@ router.post('/', function (req, res, next) {
 
 });
 
-//更新用户详细信息（即修改数据表中的一条用户记录 // 此API对应客户端请求： post /user/changeinfor
+//更新用户详细信息（即修改数据表中的一条用户记录
 router.post('/changeinfor', function (req, res, next) 
 {
   var userInfo = req.body;
@@ -123,8 +123,7 @@ router.post('/changeinfor', function (req, res, next)
   
 });
 
-//更新用户头像（即修改数据表中的一条用户记录的avatar字段的值（改为一个新的url地址  
-// 此API对应客户端请求： post /user/changeURL
+//更新用户头像（即修改数据表中的一条用户记录的avatar字段的值（改为一个新的url地址
 //router.patch('/tw', function (req, res, next) 
 router.post('/changeURL', function (req, res, next) 
 {
@@ -157,7 +156,6 @@ router.post('/changeURL', function (req, res, next)
 });
 
 ///用户上传图片到cos：
-// 此API对应客户端请求： post /user/avatar
 router.post('/avatar', function(req, res, next) {
   
   // 用于解析文件上传
@@ -199,6 +197,38 @@ router.post('/avatar', function(req, res, next) {
     }
 
   });
+
+});
+
+////点击查看用户信息页面的后台
+// 获取用户信息
+router.post('/see_user', function (req, res, next) {
+
+  var userid= req.body.userid;
+
+  mysql(userTable).where({          //通过open_id搜索数据表，找到对应用户记录
+    open_id: userid
+  })
+    .select('*')
+    .then(function (result) {
+      if (result.length > 0) {
+        var data = result[0];
+        res.json({                 //封装好用户信息，response给客户端
+          name: data.name,
+          avatar: data.avatar,
+          intro: data.intro,
+          status: data.status,
+          radio: data.radio,
+          school: data.school,
+          project: data.project
+        });
+      }
+      else {
+        res.status(400).json({
+          error: '未创建用户'
+        });
+      }
+    });
 
 });
 

@@ -1,7 +1,6 @@
 var config = require('../../config');
 
 Page({
-    //本页面的内部状态变量
   data: {
     hasLoaded: false,
     avatar: '',
@@ -11,15 +10,17 @@ Page({
     radio: '',
     school: '',
     project: '',
-    condition:true  //注意，非"true"
-    
+    condition:true  
+    //注意，此处不能写成'true'，而必须用bool变量，然后在两个要相互切换显示/不显示的按钮的点集事件里，相互写上this.setData({ condition: true/false});  ，按钮上各自赋值 hidden="{{!condition}}"/ hidden="{{condition}}"   //// 否则如果都用成condition:'true'，会发生点击按钮以后 虽然看到Appdata里状态变量值变了，但是按钮不会改变，注意，此时并不是“this.setData了却没有发生数据渲染的问题”！！其实问题是，此时不管怎么变，condition的值都会视为"非空字符串"而已，所以其实不管改为"true"还是"false"，其都永远为真，所以永远只为显示某个按钮。 
+
   },
 
-  onLoad: function () {   
+  onLoad: function () {  // 似乎是只在第一次第一次进入(即生成)这个页面的时候才会触发，所以如果在如按钮事件里改了什么参数要立刻渲染的，也是应该写在那里面，写在这里似乎没有用？
+   
   }, 
 
 
-  onShow: function ()    
+  onShow: function ()  //似乎是每一次进入(即生成)这个页面的时候都会触发， 
   {
     this.setData({ avatar: getApp().globalData.userInfo.avatar });
     this.setData({ name: getApp().globalData.userInfo.name });
@@ -29,22 +30,22 @@ Page({
    
   },
 
-//向服务器发出请求获取用户详细信息，加载初始页面所需各项数据
-  load: function () 
+
+  load: function () //向服务器发出请求获取用户详细信息，加载初始页面所需各项数据
   { 
     var that = this;
-    getApp().request({  //请求服务器上的 API: get /user
+    getApp().request({
 
       url: '/user',
       method: 'get',
-      success: function (res) {  //成功收到服务器response时执行此
+      success: function (res) {
       
-        getApp().globalData.userInfo.intro = res.data.intro; //从response里提取出data，更新到全局变量（即client/app.js内声明的globalData
+        getApp().globalData.userInfo.intro = res.data.intro;
         getApp().globalData.userInfo.status = res.data.status;
         getApp().globalData.userInfo.radio = res.data.radio;
         getApp().globalData.userInfo.school = res.data.school;
         getApp().globalData.userInfo.project = res.data.project;
-        that.setData({ intro: getApp().globalData.userInfo.intro }); //再将response的data更新到本页面的内部状态变量
+        that.setData({ intro: getApp().globalData.userInfo.intro });
         that.setData({ status: getApp().globalData.userInfo.status });
         that.setData({ radio: getApp().globalData.userInfo.radio });
         that.setData({ school: getApp().globalData.userInfo.school });
@@ -55,28 +56,27 @@ Page({
 
   },
 
-  //修改头像
   changeAvatar: function (e) {
 
     var that = this;
 
-    wx.chooseImage({ //选择本地图像
+    wx.chooseImage({
       success: function (res) {
 
-        wx.showLoading({  //显示"更新用户信息"加载窗
+        wx.showLoading({
           title: '更新用户信息',
           mask: true
         });
 
-        wx.uploadFile({  //上传选中的图片到服务器
+        wx.uploadFile({
           header: {
             skey: wx.getStorageSync('skey')
           },
-          url: config.host + '/user/avatar', //请求服务器上的 API: post /user/avatar
+          url: config.host + '/user/avatar',
           filePath: res.tempFilePaths[0],
           name: 'avatar',
-          success: function (res) { //成功通过上述API上传图片到COS后则进入此处（此处获取的res是上传图片存储的URL地址
-            getApp().request(  //再次发出请求，请求服务器上的 API: post /user/changeURL，将res中的URL地址更新给数据库中本用户记录的avatar字段
+          success: function (res) {
+            getApp().request(
               {
                 url: '/user/changeURL',
               method: 'post', 
@@ -86,8 +86,8 @@ Page({
               success: function () {  
                 wx.hideLoading();
 
-                getApp().globalData.userInfo.avatar = res.data; 
-                that.setData({ avatar: res.data });  //将页面的内部状态变量avatar更新为新的URL地址（COS中存放选择图片的地方），则此时显示头像为选中的新图片
+                getApp().globalData.userInfo.avatar = res.data;
+                that.setData({ avatar: res.data });
               }
             });
 
@@ -97,13 +97,10 @@ Page({
       }
     });
   },
-  
-  
-  
-///修改用户信息
+
   postinfor: function ()
 {
-   ////先将新edit的数据先修改到本地数据
+   ////先修改本地数据
     getApp().globalData.userInfo.intro = this.tempdata.intro;
     getApp().globalData.userInfo.status = this.tempdata.status;
     getApp().globalData.userInfo.radio = this.tempdata.radio;
@@ -121,7 +118,7 @@ Page({
       mask: true
     });
 
-  getApp().request({  //将新edit的数据更新到数据库
+  getApp().request({
   
     url: '/user/changeinfor',
     method: 'post',  

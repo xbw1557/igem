@@ -1,3 +1,75 @@
-<view class="container">
-<text>问答页面</text>
-</view>
+
+<!--垂直滚动
+
+<input placeholder="请输入你要搜索的内容" style="border: solid" confirm-type='search'/>
+
+<scroll-view scroll-y="true">
+    <view style="background: red; width: 100px; height: 250rpx" ></view>
+    <view style="background: green; width: 100px; height: 250rpx"></view>
+    <view style="background: blue; width: 100px; height: 250rpx"></view>
+    <view style="background: yellow; width: 100px; height: 250rpx"></view>
+    <view style="background: purple; width: 100px; height: 250rpx"></view>
+    
+</scroll-view>
+
+-->
+
+<!--  white-space
+  normal: 正常无变化(默认处理方式.文本自动处理换行.假如抵达容器边界内容会转到下一行)
+  pre: 保持HTML源代码的空格与换行,等同与pre标签
+  nowrap: 强制文本在一行,除非遇到br换行标签
+  pre-wrap: 同pre属性,但是遇到超出容器范围的时候会自动换行
+  pre-line: 同pre属性,但是遇到连续空格会被看作一个空格
+  inherit: 继承
+-->
+ 
+
+<!--index.wxml-->  <!--scroll-into-view与scroll-top属性似乎其实并没有用到-->
+ 
+<scroll-view  scroll-y="true" class="container" bindscrolltoupper="upper" upper-threshold="10" lower-threshold="5" bindscrolltolower="lower"  scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
+  <view class="search flex-wrp">
+      <view class="search-left flex-item">
+          <image src="../../images/search.png"></image>
+          <input placeholder="搜索问题" confirm-type="search" bindconfirm="search" placeholder-class="search-placeholder"/>
+      </view>
+      <view class="search-right flex-item" bindtap="newq">
+          <image src="../../images/write.png"></image>
+      </view>
+  </view>
+
+    <block wx:for="{{feed}}" wx:for-index="idx" wx:for-item="item" data-idx="{{idx}}">
+        <view class="feed-item">
+            <view class="feed-source">
+                <a class="">
+                    <view class="avatar">
+                        <image src="{{item.feed_source_img}}"></image>
+                    </view>
+                    <text>{{item.feed_source_name}}{{item.feed_source_txt}}</text>
+                </a>
+                <image class="item-more" mode="aspectFit" src="../../images/more.png"></image>
+            </view>
+            <view class="feed-content">
+                <view class="question" data-qid="{{item.question_id}}" bindtap="bindQueTap">
+                    <a class="question-link">
+                        <text>{{item.question}}</text>
+                    </a>
+                </view>
+                <view class="answer-body">
+                    <view bindtap="bindItemTap">
+                        <text class="answer-txt" aid="{{answer_id}}">{{item.answer_ctnt}}</text>
+                    </view>
+                    <view class="answer-actions" bindtap="bindItemTap">
+                        <view class="like dot">
+                            <a>{{item.good_num}} 浏览数 </a>
+                        </view>
+                        <view class="comments dot">
+                            <a>{{item.comment_num}} 评论 </a>
+                        </view>
+                         
+                    </view>
+                </view>
+            </view>
+        </view>
+    </block>
+</scroll-view>
+

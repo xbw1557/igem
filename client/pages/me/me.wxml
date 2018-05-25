@@ -1,6 +1,6 @@
 <!--pages/login/login.wxml-->
 <!--pages/me/me.wxml-->
-<view class="container">
+<view class="container_me">
   <view class="avatar">
     <image bindtap="changeAvatar" src="{{ avatar }}" />
   </view>

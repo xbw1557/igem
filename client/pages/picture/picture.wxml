@@ -1,0 +1,3 @@
+<block wx:for="{{pictures}}" wx:for-index="idx" wx:for-item="item">
+<image src="{{item}}"></image>
+</block>

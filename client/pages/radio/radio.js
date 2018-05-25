@@ -19,6 +19,7 @@ Page({
       this.load();
     }
     this.data.hasLoaded = true;
+    
   },
 
 

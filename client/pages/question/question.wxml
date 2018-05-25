@@ -1,0 +1,76 @@
+<!--question.wxml-->
+<view class="container">
+    <view class="question-wrp">
+        <view class="question-item">
+            <view class="que-title">
+                {{question_detail.question}}
+            </view>
+            <view class="que-content">
+               {{question_detail.question_detail}}
+            </view>
+            <view class="que-follow">
+            
+                <view class="left">
+                    <view class="watch">
+                        <image src="../../images/eye.png"></image>
+                        <text>{{question_detail.good_num}}</text>
+                    </view>
+                    <view class="comment">
+                        <image src="../../images/comment2.png"></image>
+                        <text>{{question_detail.comment_num}}</text>
+                    </view>
+                </view>
+                <view class="right">
+                    关注
+                </view>
+            </view>
+        </view>
+        <view class="que-operate flex-wrp">
+         <view class="invite flex-item" bindtap="see_pictures">
+                <image src="../../images/more.png"></image>
+                <text>查看附图</text>
+            </view>
+            <view class="write flex-item" bindtap="answer">
+                <image src="../../images/write.png"></image>
+                <text>回复</text>
+            </view>
+        </view>
+    </view>
+     <!-- answer部分开始 -->
+     <!-- 发现其实并不是非需要用scroll-view，此处设计为一次性把所有答案都读入就好，然后用wx:for渲染出多个view则可。不需要scroll-view也可实现—— ——其实发现只要页面内容很多，如有足够多个view的时候，页面就直接是可以有下拉条的，只不过不用scroll-view的时候，应该就无法实现 下滑再加载了 -->
+    <block wx:for="{{answers}}" wx:for-index="idx" wx:for-item="item">
+    <view class="answer-feed">
+        <view  class="feed-item">
+            <view class="feed-source" catchtap="seeinfor" data-id="{{item.feed_source_id}}">
+                <a class="" >
+                    <view class="avatar">
+                        <image src="{{item.feed_source_img}}"></image>
+                    </view>
+                    <text>{{item.feed_source_name}}</text>
+                    <text wx:if="{{item.feed_source_id==question_detail.feed_source_id}}">(提问者)</text>
+                </a>
+            </view>
+            <view class="feed-content">
+                <view class="answer-body">
+                    <view>
+                        <text class="answer-txt">{{item.answer_ctnt}} </text>
+                    </view>
+                    <view class="answer-actions">
+                        <view class="like dot">
+                            <a>{{item.good_num}} 赞同 </a>
+                        </view> 
+                        <view class="time">
+                            <!--发布时间-->{{item.time}}
+                        </view>
+                         <view class="time">
+                            <text catchtap="see_answer_pictures" wx:if="{{item.picture_num!=0}}" data-aid="{{item.answer_id}}">查看附图</text>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </view> 
+    </view>
+     </block>
+    <!-- answer部分结束 -->
+</view>
+

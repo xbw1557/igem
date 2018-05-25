@@ -21,10 +21,10 @@ App({
   onLaunch: function () {
 
     console.info('loading app...');
-    wx.showLoading({
+    /*wx.showLoading({
       title: '登录中',
       mask: true
-    });
+    });*/
     /////////////////////////
   },
 

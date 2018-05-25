@@ -1,5 +1,5 @@
 {
- "pages":["pages/radio/radio","pages/me/me","pages/QA/QA"
+ "pages":["pages/radio/radio","pages/me/me","pages/QA/QA","pages/question/question","pages/newq/newq", "pages/picture/picture","pages/newa/newa","pages/user_infor/user_infor"
   ],
   "window": {
     "backgroundTextStyle": "light",

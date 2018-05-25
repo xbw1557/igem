@@ -2,8 +2,10 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var config = require('./config');
 var login = require('./routes/login');
-var user = require('./routes/user');
- 
+var user = require('./routes/user'); 
+var question = require('./routes/question');
+var question_detail = require('./routes/question_detail');
+var answer = require('./routes/answer');
 
 
 var app = express();
@@ -13,10 +15,11 @@ app.use(bodyParser.json());
 
 
 app.use('/login', login);
-
  
 app.use('/user', user);
-
+app.use('/question', question);
+app.use('/question_detail', question_detail);
+app.use('/answer', answer);
 
 app.use(function(req, res, next) {
 

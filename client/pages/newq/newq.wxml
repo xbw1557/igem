@@ -1,0 +1,13 @@
+<!--pages/newq/newq.wxml-->
+<form bindsubmit="formSubmit">
+ <input  placeholder='请输入标题' name="title" />
+ <textarea name="detail" auto-height placeholder="请输入问题详情" />
+<image style="height:50rpx; width:50rpx" src="../../images/book.png" bindtap='UploadPicture'></image>
+<text>已上传图片:</text>
+<block wx:for="{{pictures}}" wx:for-index="idx" wx:for-item="item">
+        <image src="{{item}}" style="height:100rpx; width:100rpx">
+        </image>
+    </block>
+
+<button  formType="submit">发布问题</button>
+</form>
